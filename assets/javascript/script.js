@@ -40,7 +40,12 @@ UV Index Number	        Exposure Level	    Color Code
 
 
 CurrentWeather = {};
-DailyWeather = {};
+DailyWeather = {
+    temp: [],
+    uvi: [],
+    humidity: [],
+    icon: []
+};
 //data.daily[0].dt;
 var getWeatherFromCoordinates = function(coorArray) {
     fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + coorArray[0] + "&lon=" + coorArray[1] + "&exclude=hourly,minutely&appid=" + apiKey + "&units=imperial")
@@ -66,18 +71,39 @@ var getWeatherFromCoordinates = function(coorArray) {
                             console.log(DailyWeather.date);
                         })
 
-                        DailyWeather.day1Temps = formatTemp(data.daily[0].temp.min) + "/" + formatTemp(data.daily[0].temp.max);
-                        DailyWeather.day2Temps = formatTemp(data.daily[1].temp.min) + "/" + formatTemp(data.daily[1].temp.max);
-                        DailyWeather.day3Temps = formatTemp(data.daily[2].temp.min) + "/" + formatTemp(data.daily[2].temp.max);
-                        DailyWeather.day4Temps = formatTemp(data.daily[3].temp.min) + "/" + formatTemp(data.daily[3].temp.max);
-                        DailyWeather.day5Temps = formatTemp(data.daily[4].temp.min) + "/" + formatTemp(data.daily[4].temp.max);
-                        console.log("Day 1 Temps: " + DailyWeather.day1Temps);
-                        console.log("Day 2 Temps: " + DailyWeather.day2Temps);
-                        console.log("Day 3 Temps: " + DailyWeather.day3Temps);
-                        console.log("Day 4 Temps: " + DailyWeather.day4Temps);
-                        console.log("Day 5 Temps: " + DailyWeather.day5Temps);
+                        /*
+                         DailyWeather[`day${i+1}uv`] = data.daily[i].uvi;
+                        daily wind --> console.log(DailyWeather.day1uv)
+                        */
+
+                        for (let i = 0; i < 5; i++) {
+                            DailyWeather.temp.push(`${formatTemp(data.daily[i].temp.min)} / ${formatTemp(data.daily[i].temp.max)}`);
+                            DailyWeather.uvi.push(data.daily[i].uvi);
+                            DailyWeather.humidity.push(data.daily[i].humidity);
+                            //DailyWeather.weatherIcon.push(data.daily[i].weather[3]);
+
+                            // console.log(DailyWeather.temp[i]);
+                            // console.log(DailyWeather.uvi[i]);
+                            // console.log(DailyWeather.humidity[i]);
+                            //console.log(data.current.weather[0].icon);
+                        }
+
+                        data.daily.slice(-5).forEach(function(dailyWIcon) {
+                            debugger;
+                            console.log(dailyWIcon.weather.icon);
+                        })
 
 
+
+
+                        /*
+                        card function
+                        current function
+                        for city recall, store city in session data, have it send city through main function to recall data
+                        */
+
+                        //daily humidity
+                        // daily UV with color coding
 
                         //console.log(data.daily[0].temp.max);
                     } else {
@@ -100,4 +126,4 @@ function formatTemp(temp) {
     return Math.round(temp);
 }
 
-getCityStateLocation("Tyler", "Tx");
+getCityStateLocation("Dallas", "Tx");
