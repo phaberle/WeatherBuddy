@@ -68,7 +68,7 @@ var getWeatherFromCoordinates = function(coorArray) {
 
                         dailyObjects.slice(-5).forEach(function(dailyDate) {
                             DailyWeather.date = epochtoHuman(dailyDate.dt);
-                            console.log(DailyWeather.date);
+                            //console.log(DailyWeather.date);
                         })
 
                         /*
@@ -80,7 +80,9 @@ var getWeatherFromCoordinates = function(coorArray) {
                             DailyWeather.temp.push(`${formatTemp(data.daily[i].temp.min)} / ${formatTemp(data.daily[i].temp.max)}`);
                             DailyWeather.uvi.push(data.daily[i].uvi);
                             DailyWeather.humidity.push(data.daily[i].humidity);
-                            //DailyWeather.weatherIcon.push(data.daily[i].weather[3]);
+                            DailyWeather.icon.push("http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png");
+                            //"http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png";
+                            // DailyWeather.icon.push(data.daily[i].weather[0].icon);
 
                             // console.log(DailyWeather.temp[i]);
                             // console.log(DailyWeather.uvi[i]);
@@ -88,10 +90,15 @@ var getWeatherFromCoordinates = function(coorArray) {
                             //console.log(data.current.weather[0].icon);
                         }
 
-                        data.daily.slice(-5).forEach(function(dailyWIcon) {
-                            debugger;
-                            console.log(dailyWIcon.weather.icon);
-                        })
+
+
+                        // console.log(data.daily[0].weather[0].icon);
+                        // console.log(data.daily[1].weather[0].icon);
+                        // console.log(data.daily[2].weather[0].icon);
+                        // console.log(data.daily[3].weather[0].icon);
+                        // console.log(data.daily[4].weather[0].icon);
+
+
 
 
 
