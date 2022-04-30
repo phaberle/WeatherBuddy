@@ -49,30 +49,37 @@ var getWeatherFromCoordinates = function(coorArray) {
             if (response.ok) {
                 response.json().then(function(data) {
                     if (data) {
-                        var City = coorArray[2];
-                        var State = coorArray[3];
-                        var currIcon = "http://openweathermap.org/img/wn/" + data.current.weather[0].icon + ".png";
-                        var currDate = epochtoHuman(data.current.dt);
-                        var currTemp = Math.round(data.current.temp) + "F°";
-                        var dailyCount = data.daily.length;
-                        /* 
-                        console.log(currTemp);
-                        console.log(WeatherIcon);
-                        console.log(epochtoHuman(data.current.dt));
-                        console.log(CityName);
-                        console.log(State);
-                        */
-                        console.log(dailyCount);
-                        CurrentWeather.city = City;
-                        CurrentWeather.state = State;
-                        CurrentWeather.icon = currIcon;
-                        CurrentWeather.date = currDate;
-                        CurrentWeather.temp = currTemp;
-                        var dailyArray = data.daily;
-                        dailyArray.slice(-5).forEach(function(arrayItem) {
-                            var x = epochtoHuman(arrayItem.dt);
-                            console.log(x);
-                        });
+                        CurrentWeather.city = coorArray[2];;
+                        CurrentWeather.state = coorArray[3];
+                        CurrentWeather.icon = "http://openweathermap.org/img/wn/" + data.current.weather[0].icon + ".png";
+                        CurrentWeather.date = epochtoHuman(data.current.dt);
+                        CurrentWeather.temp = formatTemp(data.current.temp);
+                        console.log("City: " + CurrentWeather.city);
+                        console.log("State: " + CurrentWeather.state);
+                        console.log("IconLnk: " + CurrentWeather.icon);
+                        console.log("Today's Date: " + CurrentWeather.date);
+                        console.log("Current Temp: " + CurrentWeather.temp);
+                        var dailyObjects = data.daily;
+
+                        dailyObjects.slice(-5).forEach(function(dailyDate) {
+                            DailyWeather.date = epochtoHuman(dailyDate.dt);
+                            console.log(DailyWeather.date);
+                        })
+
+                        DailyWeather.day1Temps = formatTemp(data.daily[0].temp.min) + "/" + formatTemp(data.daily[0].temp.max);
+                        DailyWeather.day2Temps = formatTemp(data.daily[1].temp.min) + "/" + formatTemp(data.daily[1].temp.max);
+                        DailyWeather.day3Temps = formatTemp(data.daily[2].temp.min) + "/" + formatTemp(data.daily[2].temp.max);
+                        DailyWeather.day4Temps = formatTemp(data.daily[3].temp.min) + "/" + formatTemp(data.daily[3].temp.max);
+                        DailyWeather.day5Temps = formatTemp(data.daily[4].temp.min) + "/" + formatTemp(data.daily[4].temp.max);
+                        console.log("Day 1 Temps: " + DailyWeather.day1Temps);
+                        console.log("Day 2 Temps: " + DailyWeather.day2Temps);
+                        console.log("Day 3 Temps: " + DailyWeather.day3Temps);
+                        console.log("Day 4 Temps: " + DailyWeather.day4Temps);
+                        console.log("Day 5 Temps: " + DailyWeather.day5Temps);
+
+
+
+                        //console.log(data.daily[0].temp.max);
                     } else {
                         // alert("Error: Nothing found."); << ADD DOM ELEMENT ALERT
                     }
@@ -89,4 +96,8 @@ function epochtoHuman(epoch) {
     return humanTime = moment.unix(epoch).format('MM/DD/YYYY');
 }
 
-getCityStateLocation("Dallas", "Tx");
+function formatTemp(temp) {
+    return Math.round(temp);
+}
+
+getCityStateLocation("Tyler", "Tx");
