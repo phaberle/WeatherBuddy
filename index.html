@@ -5,20 +5,103 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>WeatherBuddy</title>
 </head>
 
 <body>
-    <header>
-
-    </header>
-    <main>
-
-    </main>
+    <div class="container">
+        <div class="sidebar">
+            <form id="cityForm">
+                <h2>Search for City</h2>
+                <input type="text" name="citySearch" placeholder="City, State">
+            </form>
+            <button class="btn" id="save" type="submit">Search</button>
+            <hr>
+            <div class="historySection">
+                <button class="histBtn" data-cityState="Atlanta,Ga">Atlanta</button>
+                <button class="histBtn" data-cityState="Atlanta,Ga">Atlanta</button>
+                <button class="histBtn" data-cityState="Atlanta,Ga">Atlanta</button>
+                <button class="histBtn" data-cityState="Atlanta,Ga">Atlanta</button>
+                <button class="histBtn" data-cityState="Atlanta,Ga">Atlanta</button>
+                <button class="histBtn" data-cityState="Atlanta,Ga">Atlanta</button>
+                <button class="histBtn" data-cityState="Atlanta,Ga">Atlanta</button>
+                <button class="histBtn" data-cityState="Atlanta,Ga">Atlanta</button>
+            </div>
+        </div>
+        <div class="content">
+            <div class="content-header">
+                <h1>WeatherBuddy</h1>
+            </div>
+            <div class="content-main">
+                <!-- CURRENT WEATHER -->
+                <div id="currentWeather">
+                    <h3 id="currWeatherHeadline">Atlanta(05/01/2022)<img id="currWeatherIcon" src="http://openweathermap.org/img/wn/02n.png"></h3>
+                    <ul id="currentLst">
+                        <li>Temp: 66</li>
+                        <li>Wind: 0 MPH</li>
+                        <li>Humidity: 83%</li>
+                        <li>UV Index: 0</li>
+                    </ul>
+                </div>
+                <!-- DAILY WEATHER -->
+                <div id="dailyWeather">
+                    <h3 id="1">5-Day Forecast</h3>
+                </div>
+                <!-- DW CARDS -->
+                <div id="dailyCards">
+                    <div class="dCardContainer">
+                        <div class="dCard">
+                            <ul>
+                                <li>05/02/2022</li>
+                                <li><img src="http://openweathermap.org/img/wn/10d.png"></li>
+                                <li>Temp: 70/86</li>
+                                <li>Wind: 19.1 MPH </li>
+                                <li>Humidity: 64%</li>
+                            </ul>
+                        </div>
+                        <div class="dCard">
+                            <ul>
+                                <li>05/02/2022</li>
+                                <li><img src="http://openweathermap.org/img/wn/10d.png"></li>
+                                <li>Temp: 70/86</li>
+                                <li>Wind: 19.1 MPH </li>
+                                <li>Humidity: 64%</li>
+                            </ul>
+                        </div>
+                        <div class="dCard">
+                            <ul>
+                                <li>05/02/2022</li>
+                                <li><img src="http://openweathermap.org/img/wn/10d.png"></li>
+                                <li>Temp: 70/86</li>
+                                <li>Wind: 19.1 MPH </li>
+                                <li>Humidity: 64%</li>
+                            </ul>
+                        </div>
+                        <div class="dCard">
+                            <ul>
+                                <li>05/02/2022</li>
+                                <li><img src="http://openweathermap.org/img/wn/10d.png"></li>
+                                <li>Temp: 70/86</li>
+                                <li>Wind: 19.1 MPH </li>
+                                <li>Humidity: 64%</li>
+                            </ul>
+                        </div>
+                        <div class="dCard">
+                            <ul>
+                                <li>05/02/2022</li>
+                                <li><img src="http://openweathermap.org/img/wn/10d.png"></li>
+                                <li>Temp: 70/86</li>
+                                <li>Wind: 19.1 MPH </li>
+                                <li>Humidity: 64%</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/javascript/script.js"></script>

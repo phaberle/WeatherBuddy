@@ -1,0 +1,121 @@
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    height: 100%;
+    width: 100%;
+}
+
+.sidebar {
+    height: 100%;
+    width: 300px;
+    margin-left: 20px;
+}
+
+.content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+}
+
+.content-header {
+    flex: 1;
+    background: linear-gradient(90deg, #3a6bc1, #250c5d);
+    width: 100%;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    height: 150px;
+}
+
+.content-main {
+    flex: 1;
+}
+
+.btn {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #5aa2ea;
+    color: white;
+    font-weight: bold;
+    border: none;
+    height: 30px;
+}
+
+input {
+    width: 100%;
+    height: 30px;
+}
+
+body,
+html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#currentWeather {
+    border: 1px black solid;
+    margin-top: 5px;
+    padding-left: 15px;
+    width: 98%;
+}
+
+#currentLst {
+    padding: 0;
+    margin: 0;
+}
+
+#currentLst li {
+    list-style: none;
+    padding: 5px;
+}
+
+#currWeatherHeadline {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+#currWeatherIcon {
+    position: fixed;
+    top: 80px;
+}
+
+.dCardContainer {
+    display: flex;
+    justify-content: space-around;
+}
+
+.dCard {
+    color: white;
+    background-color: #33475a;
+    width: 150px;
+    box-shadow: black 10px 5px 5px
+}
+
+ul {
+    padding-left: 2px;
+}
+
+.dCard li {
+    margin: 0px;
+    list-style: none;
+    padding: 5px;
+}
+
+.histBtn {
+    width: 100%;
+    padding: 5px 5px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.historySection {
+    margin-left: 0;
+}

@@ -13,6 +13,7 @@ var getCityStateLocation = function(city, state) {
                         var city = data[0].name;
                         var state = data[0].state;
                         var coorArray = [lat, lon, city, state];
+
                         //console.log(coordinates);
                         getWeatherFromCoordinates(coorArray);
                     } else {
@@ -27,24 +28,14 @@ var getCityStateLocation = function(city, state) {
         });
 }
 
-// http://openweathermap.org/img/wn/10d@2x.png <-- weather icon
-
-/*
-UV Index Number	        Exposure Level	    Color Code
-2 or less	            Low	                Green
-3 to 5	                Moderate	        Yellow
-6 to 7	                High	            Orange
-8 to 10	                Very High	        Red
-*/
-
-
-
 CurrentWeather = {};
 DailyWeather = {
+    date: [],
     temp: [],
     uvi: [],
     humidity: [],
-    icon: []
+    icon: [],
+    wind: []
 };
 //data.daily[0].dt;
 var getWeatherFromCoordinates = function(coorArray) {
@@ -59,60 +50,24 @@ var getWeatherFromCoordinates = function(coorArray) {
                         CurrentWeather.icon = "http://openweathermap.org/img/wn/" + data.current.weather[0].icon + ".png";
                         CurrentWeather.date = epochtoHuman(data.current.dt);
                         CurrentWeather.temp = formatTemp(data.current.temp);
-                        console.log("City: " + CurrentWeather.city);
-                        console.log("State: " + CurrentWeather.state);
-                        console.log("IconLnk: " + CurrentWeather.icon);
-                        console.log("Today's Date: " + CurrentWeather.date);
-                        console.log("Current Temp: " + CurrentWeather.temp);
-                        var dailyObjects = data.daily;
+                        CurrentWeather.uv = data.current.uvi;
+                        CurrentWeather.wind = data.current.wind_speed + " MPH";
+                        CurrentWeather.humidity = data.current.humidity + "%";
+                        // console.log("City: " + CurrentWeather.city);
+                        // console.log("State: " + CurrentWeather.state);
+                        // console.log("IconLnk: " + CurrentWeather.icon);
+                        // console.log("Today's Date: " + CurrentWeather.date);
+                        // console.log("Current Temp: " + CurrentWeather.temp);
+                        // var dailyObjects = data.daily;
 
-                        dailyObjects.slice(-5).forEach(function(dailyDate) {
-                            DailyWeather.date = epochtoHuman(dailyDate.dt);
-                            //console.log(DailyWeather.date);
-                        })
-
-                        /*
-                         DailyWeather[`day${i+1}uv`] = data.daily[i].uvi;
-                        daily wind --> console.log(DailyWeather.day1uv)
-                        */
-
-                        for (let i = 0; i < 5; i++) {
-                            DailyWeather.temp.push(`${formatTemp(data.daily[i].temp.min)} / ${formatTemp(data.daily[i].temp.max)}`);
+                        for (let i = 1; i <= 5; i++) {
+                            DailyWeather.date.push(epochtoHuman(data.daily[i].dt));
+                            DailyWeather.temp.push(`${formatTemp(data.daily[i].temp.min)}/${formatTemp(data.daily[i].temp.max)}`);
                             DailyWeather.uvi.push(data.daily[i].uvi);
-                            DailyWeather.humidity.push(data.daily[i].humidity);
+                            DailyWeather.humidity.push(data.daily[i].humidity + "%");
                             DailyWeather.icon.push("http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png");
-                            //"http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png";
-                            // DailyWeather.icon.push(data.daily[i].weather[0].icon);
-
-                            // console.log(DailyWeather.temp[i]);
-                            // console.log(DailyWeather.uvi[i]);
-                            // console.log(DailyWeather.humidity[i]);
-                            //console.log(data.current.weather[0].icon);
+                            DailyWeather.wind.push(data.daily[i].wind_speed + " MPH");
                         }
-
-
-
-                        // console.log(data.daily[0].weather[0].icon);
-                        // console.log(data.daily[1].weather[0].icon);
-                        // console.log(data.daily[2].weather[0].icon);
-                        // console.log(data.daily[3].weather[0].icon);
-                        // console.log(data.daily[4].weather[0].icon);
-
-
-
-
-
-
-                        /*
-                        card function
-                        current function
-                        for city recall, store city in session data, have it send city through main function to recall data
-                        */
-
-                        //daily humidity
-                        // daily UV with color coding
-
-                        //console.log(data.daily[0].temp.max);
                     } else {
                         // alert("Error: Nothing found."); << ADD DOM ELEMENT ALERT
                     }
@@ -125,12 +80,31 @@ var getWeatherFromCoordinates = function(coorArray) {
         });
 }
 
+
+var UVtoColorCoding = function(UVNum) {
+    let answer = "";
+    if (UVNum <= 2) { answer = "green" };
+    if (UVNum >= 3 && UVNum <= 5) { answer = "yellow" };
+    if (UVNum >= 6 && UVNum <= 7) { answer = "orange" };
+    if (UVNum >= 8 && UVNum <= 10) { answer = "red" };
+    return answer;
+}
+
 function epochtoHuman(epoch) {
     return humanTime = moment.unix(epoch).format('MM/DD/YYYY');
 }
 
 function formatTemp(temp) {
     return Math.round(temp);
+}
+
+function clearDailyWeatherArrays() {
+    DailyWeather.date.splice(0, DailyWeather.date.length);
+    DailyWeather.temp.splice(0, DailyWeather.temp.length);
+    DailyWeather.uvi.splice(0, DailyWeather.uvi.length);
+    DailyWeather.humidity.splice(0, DailyWeather.humidity.length);
+    DailyWeather.icon.splice(0, DailyWeather.icon.length);
+    DailyWeather.wind.splice(0, DailyWeather.wind.length);
 }
 
 getCityStateLocation("Dallas", "Tx");
