@@ -5,7 +5,7 @@ var histSec = document.querySelector(".historySection");
 
 const apiKey = "990fb7b2f72e24a5eaca77e18553684b";
 var getCityStateLocation = function(city, state) {
-    fetch("http://api.openweathermap.org/geo/1.0/direct?q=" + city + "," + state + ",US&limit=1&appid=" + apiKey)
+    fetch("https://api.openweathermap.org/geo/1.0/direct?q=" + city + "," + state + ",US&limit=1&appid=" + apiKey)
         .then(function(response) {
             //request was successful
             if (response.ok) {
@@ -49,7 +49,7 @@ var getWeatherFromCoordinates = function(coorArray) {
                     if (data) {
                         CurrentWeather.city = coorArray[2];;
                         CurrentWeather.state = coorArray[3];
-                        CurrentWeather.icon = "http://openweathermap.org/img/wn/" + data.current.weather[0].icon + ".png";
+                        CurrentWeather.icon = "https://openweathermap.org/img/wn/" + data.current.weather[0].icon + ".png";
                         CurrentWeather.date = epochtoHuman(data.current.dt);
                         CurrentWeather.temp = formatTemp(data.current.temp);
                         CurrentWeather.uv = data.current.uvi;
@@ -61,7 +61,7 @@ var getWeatherFromCoordinates = function(coorArray) {
                             DailyWeather.temp.push(`${formatTemp(data.daily[i].temp.max)} ${formatTemp(data.daily[i].temp.min)}`);
                             DailyWeather.uvi.push(data.daily[i].uvi);
                             DailyWeather.humidity.push(data.daily[i].humidity + "%");
-                            DailyWeather.icon.push("http://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png");
+                            DailyWeather.icon.push("https://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png");
                             DailyWeather.wind.push(data.daily[i].wind_speed + " MPH");
                         }
 
