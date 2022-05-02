@@ -26,7 +26,7 @@ var getCityStateLocation = function(city, state) {
         })
         .catch(function(error) {
             //Notice this '.catch()' getting chained onto the end of the .'then()' method
-            alert("Unable to connect to geoLocationsFile");
+            alert("Unable to connect to API");
         });
 }
 
@@ -74,7 +74,7 @@ var getWeatherFromCoordinates = function(coorArray) {
             } else {}
         })
         .catch(function(error) {
-            alert("Unable to connect to geoLocationsFile");
+            alert("Unable to connect to API");
         });
 }
 
