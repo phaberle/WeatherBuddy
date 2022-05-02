@@ -4,6 +4,8 @@ var histSec = document.querySelector(".historySection");
 
 
 const apiKey = "990fb7b2f72e24a5eaca77e18553684b";
+
+//STEP 2 for GETTING WEATHER
 var getCityStateLocation = function(city, state) {
     fetch("https://api.openweathermap.org/geo/1.0/direct?q=" + city + "," + state + ",US&limit=1&appid=" + apiKey)
         .then(function(response) {
@@ -38,7 +40,8 @@ DailyWeather = {
     icon: [],
     wind: []
 };
-//data.daily[0].dt;
+
+//STEP 3 for getting weather --> this function creates custom data objects. 
 var getWeatherFromCoordinates = function(coorArray) {
     fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + coorArray[0] + "&lon=" + coorArray[1] + "&exclude=hourly,minutely&appid=" + apiKey + "&units=imperial")
         .then(function(response) {
@@ -67,6 +70,7 @@ var getWeatherFromCoordinates = function(coorArray) {
                     } else {
                         window.alert("Error: Nothing found.");
                     }
+                    //CALLS to create DOM elements from data objects
                     buildCurrentWeatherPart(CurrentWeather);
                     buildDailyWeatherPart(DailyWeather);
                 });
@@ -77,7 +81,7 @@ var getWeatherFromCoordinates = function(coorArray) {
         });
 }
 
-
+//CURRENT WEATHER BUILDER
 var buildCurrentWeatherPart = function(CurrentWeather) {
     var city_state = CurrentWeather.city + "," + CurrentWeather.state;
     var uviColorCoding = UVtoColorCoding(CurrentWeather.uv);
@@ -91,6 +95,8 @@ var buildCurrentWeatherPart = function(CurrentWeather) {
     <li id="uvItem">UV Index: <span style="background:${uviColorCoding}; margin-left:4px;text-align:center;padding:3px;border:1px black solid"> ${CurrentWeather.uv}<span></li>
     </ul>
     `
+
+    //HISTORY BUTTON CREATION AND MANAGEMENT
     var histSecCt = histSec.childElementCount;
     var histParent = histSec;
     if (histSecCt == 8) {
@@ -113,6 +119,9 @@ var buildCurrentWeatherPart = function(CurrentWeather) {
         histParent.appendChild(newBtn);
     }
 }
+
+
+//CREATE 5-DAY FORECAST DOM ELEMENTS
 var buildDailyWeatherPart = function(DailyWeather) {
     var content = ""
     document.getElementById("dCardContainer").innerHTML = "";
@@ -136,7 +145,7 @@ var buildDailyWeatherPart = function(DailyWeather) {
 }
 
 
-
+//EVALUATE UV INDEX data, RETURN COLOR
 var UVtoColorCoding = function(UVNum) {
     let answer = "";
     if (UVNum <= 2.99) { answer = "green" };
@@ -147,14 +156,20 @@ var UVtoColorCoding = function(UVNum) {
     return answer;
 }
 
+//converts epoch time from API to a data people understand
 function epochtoHuman(epoch) {
     return humanTime = moment.unix(epoch).format('MM/DD/YYYY');
 }
 
+
+//rounds temp to nearest whole number
 function formatTemp(temp) {
     return Math.round(temp);
 }
 
+
+
+//CLEARS Data Obhects so each user search is a fresh start
 function clearWeatherDatasets() {
     CurrentWeather.city = "";
     CurrentWeather.state = "";
@@ -173,6 +188,7 @@ function clearWeatherDatasets() {
     DailyWeather.wind.splice(0, DailyWeather.wind.length);
 }
 
+//STEP 1 for getting weather
 handleSearch = function(event) {
     event.preventDefault();
     var userInput = userSrch.value;
@@ -189,6 +205,7 @@ handleSearch = function(event) {
 }
 
 
+// does traffic for history buttons
 handleHistoryRecall = function(cityState) {
     var txtArray = cityState.split(',');
     if (txtArray.length == 2) {
@@ -196,18 +213,14 @@ handleHistoryRecall = function(cityState) {
         let state = txtArray[1];
         clearWeatherDatasets();
         getCityStateLocation(city, state);
-    } else {
-        window.alert("Please enter city, state for search.");
     }
 }
 
+//gets history button attribute to start recall process
 var recallHistory = function(event) {
     var cityState = event.target.getAttribute("data-cityState");
     handleHistoryRecall(cityState);
 }
-
-
-
 
 searchBtn.addEventListener("click", handleSearch);
 histSec.addEventListener("click", recallHistory);
