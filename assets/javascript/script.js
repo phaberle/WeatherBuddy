@@ -16,7 +16,6 @@ var getCityStateLocation = function(city, state) {
                         var city = data[0].name;
                         var state = data[0].state;
                         var coorArray = [lat, lon, city, state];
-                        debugger;
                         getWeatherFromCoordinates(coorArray);
                     } else {
                         window.alert("Error: Nothing found.");
